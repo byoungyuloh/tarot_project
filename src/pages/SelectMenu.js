@@ -3,8 +3,6 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
@@ -17,7 +15,8 @@ import Container from '@mui/material/Container';
 import love_image from '../image/6_5.png';
 import money_image from '../image/21_4(hidden).png';
 import health_image from '../image/21_2.png';
-import { useNavigate } from 'react-router-dom'; 
+import { unstable_HistoryRouter, useNavigate } from 'react-router-dom'; 
+import { Navigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -60,12 +59,14 @@ const tiers = [
 ];
 
 
-function PricingContent() {
+
+export default function SelectMenu() {
+    let navigate = useNavigate();
     const OnClickImage = (e) => {
-        console.log(e.target.name);
-        let navigate = useNavigate();
-        navigate('/SelectImage');
+        let target_name = e.target.name;
+        target_name == 'main' ? navigate('/Main') : navigate('/SelectImage', { state : { 'target_name' : target_name } })
     }
+
   return (
     <React.Fragment>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
@@ -80,34 +81,8 @@ function PricingContent() {
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             Amm.Tarrot
           </Typography>
-          <nav>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Features
-            </Link>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Enterprise
-            </Link>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Support
-            </Link>
-          </nav>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-            Login
+          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick = { OnClickImage } name = 'main'>
+            Main
           </Button>
         </Toolbar>
       </AppBar>
@@ -154,22 +129,19 @@ function PricingContent() {
                         : theme.palette.grey[700],
                   }}
                 />
-                <CardContent>
-                  <Box
+                  <Box 
                     sx={{
                       display: 'flex',
                       justifyContent: 'center',
                       alignItems: 'baseline'
                     }}
+                    onClick = { OnClickImage }
                   >
-                    <img src={ tier.card_image } alt='logo' style={ { height : '50vh' } } onClick = { OnClickImage } name = { tier.category } />
-                  </Box>
-                </CardContent>
-                <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage }>
+                    <img src={ tier.card_image } alt='logo' style={ { height : '50vh' } } name = { tier.category } /> 
+                  </Box>                
+                  <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage } name = { tier.category }  >
                     {tier.buttonText}
                   </Button>
-                </CardActions>
               </Card>
             </Grid>
           ))}
@@ -192,8 +164,4 @@ function PricingContent() {
       {/* End footer */}
     </React.Fragment>
   );
-}
-
-export default function Pricing() {
-  return <PricingContent />;
 }

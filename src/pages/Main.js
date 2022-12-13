@@ -26,15 +26,14 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function SignIn() {
+export default function Main() {
   let navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
-    navigate('/selectmenu');
+    let target_name = event.target.name;
+    target_name == 'menu' ? navigate('/SelectMenu') : navigate('/Main')
   };
-
   return (
-    
     <ThemeProvider theme={theme}>
       <AppBar
         position="static"
@@ -46,34 +45,11 @@ export default function SignIn() {
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             Amm.Tarrot
           </Typography>
-          <nav>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Features
-            </Link>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Enterprise
-            </Link>
-            <Link
-              variant="button"
-              color="text.primary"
-              href="#"
-              sx={{ my: 1, mx: 1.5 }}
-            >
-              Support
-            </Link>
-          </nav>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
-            Login
+          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} name='main' onClick={ handleSubmit }>
+            Main
+          </Button>
+          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} name='menu' onClick={ handleSubmit }>
+            Select Menu
           </Button>
         </Toolbar>
       </AppBar>
@@ -102,11 +78,13 @@ export default function SignIn() {
           }}
         >
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <img src={ card_image } alt='logo' style={ { height : '60vh' } } />
+          <img src={ card_image } alt='logo' style={ { height : '60vh' } } name = 'menu' onClick={ handleSubmit }/>
             <Button
               type="submit"
               fullWidth
               variant="contained"
+              onClick={ handleSubmit }
+              name='menu'
             >
               Go to Taro
             </Button>
