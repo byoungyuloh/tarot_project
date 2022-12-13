@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
-import card_image from './image/cd_image.png';
 import {
   BrowserRouter,
   Routes,
   Route,
-  Link,
 } from 'react-router-dom';
 import Main from './pages/Main';
 import SelectMenu from './pages/SelectMenu';
@@ -15,14 +13,14 @@ import Result from './pages/Result';
 
 
 function App() {
-  const [move, setMove] = useState(false);
-  const startMove = () => {
-    console.log('start');
-    setMove(true);
-  }
-  const endMove = () => {
-    setMove(false);
-  }
+  // const [move, setMove] = useState(false);
+  // const startMove = () => {
+  //   console.log('start');
+  //   setMove(true);
+  // }
+  // const endMove = () => {
+  //   setMove(false);
+  // }
 
   // return (
   //   <div className="App">

@@ -14,6 +14,10 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
+import love_image from '../image/6_5.png';
+import money_image from '../image/21_4(hidden).png';
+import health_image from '../image/21_2.png';
+import { useNavigate } from 'react-router-dom'; 
 
 function Copyright(props) {
   return (
@@ -31,45 +35,37 @@ function Copyright(props) {
 const tiers = [
   {
     title: 'Love',
-    price: '0',
-    description: [
-      '10 users included',
-      '2 GB of storage',
-      'Help center access',
-      'Email support',
-    ],
     buttonText: 'Go to LoveTarrot',
+    subheader: '33% picks!',
     buttonVariant: 'outlined',
+    card_image : love_image,
+    category : 'love'
   },
   {
     title: 'Money',
-    // subheader: 'Most popular',
-    price: '15',
-    description: [
-      '20 users included',
-      '10 GB of storage',
-      'Help center access',
-      'Priority email support',
-    ],
+    subheader: '34% picks!',
     buttonText: 'Go to MoneyTarrot',
     buttonVariant: 'outlined',
+    card_image : money_image,
+    category : 'money'
   },
   {
     title: 'Health',
-    price: '30',
-    description: [
-      '50 users included',
-      '30 GB of storage',
-      'Help center access',
-      'Phone & email support',
-    ],
     buttonText: 'Go to HealthTarrot',
+    subheader: '33% picks!',
     buttonVariant: 'outlined',
+    card_image : health_image,
+    category : 'health'
   },
 ];
 
 
 function PricingContent() {
+    const OnClickImage = (e) => {
+        console.log(e.target.name);
+        let navigate = useNavigate();
+        navigate('/SelectImage');
+    }
   return (
     <React.Fragment>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
@@ -82,7 +78,7 @@ function PricingContent() {
       >
         <Toolbar sx={{ flexWrap: 'wrap' }}>
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
-            Company name
+            Amm.Tarrot
           </Typography>
           <nav>
             <Link
@@ -139,7 +135,7 @@ function PricingContent() {
               item
               key={tier.title}
               xs={12}
-              sm={tier.title === 'Enterprise' ? 12 : 6}
+            //   sm={tier.title === 'Enterprise' ? 12 : 6}
               md={4}
             >
               <Card>
@@ -163,29 +159,14 @@ function PricingContent() {
                     sx={{
                       display: 'flex',
                       justifyContent: 'center',
-                      alignItems: 'baseline',
-                      mb: 2,
+                      alignItems: 'baseline'
                     }}
                   >
-                    <Typography component="h2" variant="h3" color="text.primary">
-                      ${tier.price}
-                    </Typography>
+                    <img src={ tier.card_image } alt='logo' style={ { height : '50vh' } } onClick = { OnClickImage } name = { tier.category } />
                   </Box>
-                  <ul>
-                    {tier.description.map((line) => (
-                      <Typography
-                        component="li"
-                        variant="subtitle1"
-                        align="center"
-                        key={line}
-                      >
-                        {line}
-                      </Typography>
-                    ))}
-                  </ul>
                 </CardContent>
                 <CardActions>
-                  <Button fullWidth variant={tier.buttonVariant}>
+                  <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage }>
                     {tier.buttonText}
                   </Button>
                 </CardActions>
@@ -200,7 +181,7 @@ function PricingContent() {
         component="footer"
         sx={{
           borderTop: (theme) => `1px solid ${theme.palette.divider}`,
-          mt: 8,
+          mt: 4,
           py: [3, 6],
         }}
       >
