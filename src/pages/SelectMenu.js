@@ -137,7 +137,7 @@ export default function SelectMenu() {
                     }}
                     onClick = { OnClickImage }
                   >
-                    <img src={ tier.card_image } alt='logo' style={ { height : '50vh' } } name = { tier.category } /> 
+                    <img src={ tier.card_image } alt='logo' style={ { height : '55vh' } } name = { tier.category } /> 
                   </Box>                
                   <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage } name = { tier.category }  >
                     {tier.buttonText}
