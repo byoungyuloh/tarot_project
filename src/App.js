@@ -9,6 +9,7 @@ import Main from './pages/Main';
 import SelectMenu from './pages/SelectMenu';
 import SelectImage from './pages/SelectImage';
 import Result from './pages/Result';
+import Test from './pages/Test';
 
 
 
@@ -40,6 +41,7 @@ function App() {
     <Route path='/Main' element={<Main />} />
     <Route path='/SelectMenu' element={<SelectMenu />} />
     <Route path='/SelectImage' element={<SelectImage />} />
+    <Route path='/test' element={<Test />} />
     <Route path='/result' element={<Result />} />
     </Routes>
     </BrowserRouter>
