@@ -448,7 +448,7 @@ const SelectImage = () => {
       <div style={ { width : '60%', float : 'right' }}>
         <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
-          <Grid container item spacing={3} >
+          <Grid container item spacing={2} >
           <React.Fragment>
             {random_list.map((random) => (
                   <div key = { random.id } draggable = 'true'>
@@ -458,9 +458,7 @@ const SelectImage = () => {
                   onDrag = { onDragStart }
                   onDragEnd = { onDragEnd }
                   onMouseMove = { onMouseUp }
-                  /> 
-                  {/* onMouseDown = { catchDrag }  */}
-                  <br />
+                  />
                   </div>
               ))}
           </React.Fragment>
