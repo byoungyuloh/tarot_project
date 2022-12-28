@@ -316,13 +316,23 @@ const SelectImage = () => {
 
 
     const [firstImage, setFirstImage] = useState(false);
-    const [seconImage, setseconImage] = useState(false);
-    const [thirdImage, setthirdImage] = useState(false);
+    const [seconImage, setSeconImage] = useState(false);
+    const [thirdImage, setThirdImage] = useState(false);
 
     function onDropImage(e) {
       e.preventDefault();
-      console.log(e);
-      setFirstImage(!firstImage);
+      let paperName = e.target.id;
+      console.log(e.target.id);
+      
+      if(paperName == 'firstpaper') {
+        setFirstImage(true);
+      }
+      if(paperName == 'secondpaper') {
+        setSeconImage(true);
+      }
+      if(paperName == 'thirdpaper') {
+        setThirdImage(true);
+      }
     }
 
 
@@ -337,8 +347,8 @@ const SelectImage = () => {
 
     // 드래그가 끝난 시점에 이미지 원위치
     function onDragEnd(e) {
-      console.log('drag end');
-      console.log(e.target)
+      console.log(e.target.id);
+      // console.log('drag end');
       // console.log(e);
     }
 
@@ -395,8 +405,9 @@ const SelectImage = () => {
       <div style={ { width : '35%', float : 'left' }}>
       <Grid sx={{ flexGrow : 1 }} container spacing={2}>
       <Grid item xs={12}>
-        <Grid container justifyContent="left" spacing={spacing}>
+        <Grid container justifyContent="center" spacing={spacing}>
               <Grid>
+                <h1 style={ { textAlign : 'center' }}>First Card</h1>
               <Paper
                 sx={{
                   height: '60vh',
@@ -407,11 +418,13 @@ const SelectImage = () => {
                     : theme.palette.grey[700],
                 }}
                 style={ firstImage ? styles.select_left : styles.emptyContainer }
-                name = 'firstpaper'
+                id = 'firstpaper'
                 onDrop = { onDropImage } onDragOver = { onDragOver }
               />
             </Grid>
+            <div style={ { width : '1vh' }}></div>
             <Grid>
+            <h1 style={ { textAlign : 'center' }}>Second Card</h1>
               <Paper
                 sx={{
                   height: '60vh',
@@ -422,11 +435,13 @@ const SelectImage = () => {
                     : theme.palette.grey[700],
                 }}
                 style={ seconImage ? styles.select_center : styles.emptyContainer }
-                name = 'secondpaper'
+                id = 'secondpaper'
                 onDrop = { onDropImage } onDragOver = { onDragOver }
               />
             </Grid>
+            <div style={ { width : '1vh' }}></div>
             <Grid>
+            <h1 style={ { textAlign : 'center' }}>Third Card</h1>
               <Paper
                 sx={{
                   height: '60vh',
@@ -437,7 +452,7 @@ const SelectImage = () => {
                     : theme.palette.grey[700],
                 }}
                 style={ thirdImage ? styles.select_right : styles.emptyContainer }
-                name = 'thirdpaper'
+                id = 'thirdpaper'
                 onDrop = { onDropImage } onDragOver = { onDragOver }
               />
             </Grid>
@@ -452,12 +467,12 @@ const SelectImage = () => {
           <React.Fragment>
             {random_list.map((random) => (
                   <div key = { random.id } draggable = 'true'>
-                  <img src = { back_card } key = { random.id }
-                  style={ { height : '250px', position : 'absolute', left : random.left, top : random.top, cursor : 'pointer'  } } alt='logo'
-                  id = { random.id } 
-                  onDrag = { onDragStart }
-                  onDragEnd = { onDragEnd }
-                  onMouseMove = { onMouseUp }
+                  <img  src = { back_card } key = { random.id }
+                        style={ { height : '250px', position : 'absolute', left : random.left, top : random.top, cursor : 'pointer'  } } alt='logo'
+                        id = { random.id } 
+                        onDrag = { onDragStart }
+                        onDragEnd = { onDragEnd }
+                        onMouseMove = { onMouseUp }
                   />
                   </div>
               ))}
