@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -17,9 +17,8 @@ import black_image from '../image/black.jpg';
 import select_left from '../image/default_left.png';
 import select_center from '../image/default_center.png';
 import select_right from '../image/default_right.png';
-import { EggTwoTone } from '@mui/icons-material';
-import Card from '@mui/material/Card';
-import Draggable from "react-draggable";
+
+
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -143,6 +142,11 @@ const random_list = [
     top : 996
   }
 ]
+
+const random_fix = random_list.slice(0,9);
+
+// console.log(random_fix);
+
 const styles = {
   select_left : {
     backgroundImage : `url(${select_left})`
@@ -193,23 +197,7 @@ const SelectImage = () => {
   }
   let location = useLocation();
   // menu page 사용자 선택 확인용
-  const target_name = location.state.target_name;
-
-
-  const startMove = (e) => {
-    e.target.className = 'App-logo';
-  }
-  const endMove = (e) => {
-    e.target.className = '';
-  }
-
-  const OnClickImage = (e) => {
-    // 현재위치 확인
-    img_from_left = e.target.offsetLeft;
-    img_from_top = e.target.offsetTop;
-    // e.target.className = 'App-logo';
-  }
-
+  
   const [move, setMove] = useState(false);
 
   let img_from_left = 0;
@@ -224,22 +212,14 @@ const SelectImage = () => {
   const speed = 0.03;
 
   let obj_wine = document.getElementById('1');
-    // 위치 체크
-  // function getLocFromLeft(obj){
-  //     return parseInt(obj.target.style.left.replace('px',''));
-  // }
-  // function getLocFromTop(obj){
-  //     return parseInt(obj.style.top.replace('px',''));
-  // }
-
+  
+  // 위치 체크
   function getLocFromLeft(e){
     return parseInt(e.target.style.left.replace('px',''));
   }
   function getLocFromTop(e){
     return parseInt(e.target.style.top.replace('px',''));
   }
-
-
 
 
   // 이미지 이동 함수
@@ -309,10 +289,15 @@ const SelectImage = () => {
 
 
     function onDragOver(e) {
+      // console.log(e.target.id);
       e.preventDefault();
-      // console.log('on drag over');
-      // console.log('image in');
     }
+
+    let firstSelect;
+    let secondSelect;
+    let thirdSelect;
+
+    const result = [];
 
 
     const [firstImage, setFirstImage] = useState(false);
@@ -322,16 +307,17 @@ const SelectImage = () => {
     function onDropImage(e) {
       e.preventDefault();
       let paperName = e.target.id;
-      console.log(e.target.id);
-      
       if(paperName == 'firstpaper') {
         setFirstImage(true);
+        console.log(firstImage);
       }
       if(paperName == 'secondpaper') {
         setSeconImage(true);
+        console.log(seconImage);
       }
       if(paperName == 'thirdpaper') {
         setThirdImage(true);
+        console.log(thirdImage);
       }
     }
 
@@ -342,6 +328,7 @@ const SelectImage = () => {
 
     // 드래그가 시작되면서 실행되는 이벤트
     function onDragStart(e) {
+      
     }
 
 
@@ -354,13 +341,102 @@ const SelectImage = () => {
 
     // 커서가 이미지에 올라왔을때 이미지 원위치를 저장해둠.
     function onMouseUp(e) {
+      // console.log(e.target.id);
       orgLeft = e.target.style.left;
       orgTop = e.target.style.top;
-      // console.log('org left, top');
-      // console.log(orgLeft);
-      // console.log(orgTop);
     }
 
+
+    // stackOnClick
+    function stackOnClick(e) {
+      
+      spreadButton.current.childNodes[0].style.left = '1100px';
+      spreadButton.current.childNodes[0].style.top = '296px';
+
+      spreadButton.current.childNodes[1].style.left = '1100px';
+      spreadButton.current.childNodes[1].style.top = '296px';
+
+      spreadButton.current.childNodes[2].style.left = '1100px';
+      spreadButton.current.childNodes[2].style.top = '296px';
+
+      spreadButton.current.childNodes[3].style.left = '1100px';
+      spreadButton.current.childNodes[3].style.top = '296px';
+
+      spreadButton.current.childNodes[4].style.left = '1100px';
+      spreadButton.current.childNodes[4].style.top = '296px';
+
+      spreadButton.current.childNodes[5].style.left = '1100px';
+      spreadButton.current.childNodes[5].style.top = '296px';
+
+      spreadButton.current.childNodes[6].style.left = '1100px';
+      spreadButton.current.childNodes[6].style.top = '296px';
+
+      spreadButton.current.childNodes[7].style.left = '1100px';
+      spreadButton.current.childNodes[7].style.top = '296px';
+
+      spreadButton.current.childNodes[8].style.left = '1100px';
+      spreadButton.current.childNodes[8].style.top = '296px';
+
+    }
+    
+
+    //spreadOnClick
+    const spreadButton = useRef(null);
+
+    function spreadOnClick(e) {
+      
+      
+      setTimeout(function () {
+        spreadButton.current.childNodes[0].style.left = '1300px';
+        spreadButton.current.childNodes[0].style.top = '246px';
+      }, 150)
+      
+      setTimeout(function () {
+        spreadButton.current.childNodes[1].style.left = '1700px'
+        spreadButton.current.childNodes[1].style.top = '246px';
+      }, 300)
+
+      setTimeout(function () {
+        spreadButton.current.childNodes[2].style.left = '2100px';
+        spreadButton.current.childNodes[2].style.top = '246px';
+      }, 450)
+
+
+      
+      setTimeout(function () {
+        spreadButton.current.childNodes[3].style.left = '1300px';
+        spreadButton.current.childNodes[3].style.top = '596px';
+      }, 600)
+      
+      setTimeout(function () {
+        spreadButton.current.childNodes[4].style.left = '1700px'
+        spreadButton.current.childNodes[4].style.top = '596px';
+      }, 750)
+
+      setTimeout(function () {
+        spreadButton.current.childNodes[5].style.left = '2100px';
+        spreadButton.current.childNodes[5].style.top = '596px';
+      }, 900)
+
+
+
+
+      setTimeout(function () {
+        spreadButton.current.childNodes[6].style.left = '1300px';
+        spreadButton.current.childNodes[6].style.top = '946px';
+      }, 1050)
+      
+      setTimeout(function () {
+        spreadButton.current.childNodes[7].style.left = '1700px'
+        spreadButton.current.childNodes[7].style.top = '946px';
+      }, 1200)
+
+      setTimeout(function () {
+        spreadButton.current.childNodes[8].style.left = '2100px';
+        spreadButton.current.childNodes[8].style.top = '946px';
+      }, 1350)
+      
+    }
 
 
     return (
@@ -389,7 +465,7 @@ const SelectImage = () => {
         </Toolbar>
       </AppBar>
       {/* Hero unit */}
-      <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 6 }}>
+      <Container disableGutters maxWidth="sm" component="main" sx={{ pt: 8, pb: 3 }}>
         <Typography
           component="h1"
           variant="h2"
@@ -461,7 +537,7 @@ const SelectImage = () => {
       </Grid>
       </div>
       <div style={ { width : '60%', float : 'right' }}>
-        <Box sx={{ flexGrow: 1 }}>
+        {/* <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={1}>
           <Grid container item spacing={2} >
           <React.Fragment>
@@ -479,23 +555,24 @@ const SelectImage = () => {
           </React.Fragment>
           </Grid>         
         </Grid>
-        </Box>
+        </Box> */} 
+          <div ref = { spreadButton }>
+            <div className = 'card' ><img src = {back_card} id = { random_fix[0].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
+            <div className = 'card' ><img src = {back_card} id = { random_fix[1].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
+            <div className = 'card' ><img src = {back_card} id = { random_fix[2].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
+            <div className = 'card' ><img src = {back_card} id = { random_fix[3].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
+            <div className = 'card' ><img src = {back_card} id = { random_fix[4].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
+            <div className = 'card' ><img src = {back_card} id = { random_fix[5].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
+            <div className = 'card' ><img src = {back_card} id = { random_fix[6].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
+            <div className = 'card' ><img src = {back_card} id = { random_fix[7].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
+            <div className = 'card' ><img src = {back_card} id = { random_fix[8].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
+        </div>
+          <div>
+          <Button variant = 'outlined' onClick = { spreadOnClick } >Spread</Button>
+          <Button variant = 'outlined' onClick = { stackOnClick } style = { { marginLeft : '10px' }}>Stack</Button>
+          </div>
       </div>
       </div>
-      {/* Footer */}
-      {/* <Container
-        maxWidth="md"
-        component="footer"
-        sx={{
-          mt: 4,
-          py: [3, 6],
-        }}
-      >
-        <Grid container spacing={4} justifyContent="space-evenly">
-        </Grid>
-      </Container> */}
-      {/* <Copyright sx={{ mt: 24 }} /> */}
-      {/* End footer */}
     </React.Fragment>
     )
 }
