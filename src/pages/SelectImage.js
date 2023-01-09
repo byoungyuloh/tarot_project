@@ -1,6 +1,5 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
@@ -9,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
-import { unstable_HistoryRouter, useLocation, useNavigate } from 'react-router-dom'; 
+import { useLocation, useNavigate } from 'react-router-dom'; 
 import Paper from '@mui/material/Paper';
 import { experimentalStyled as styled } from '@mui/material/styles';
 import back_card from '../image/back_card.png';
@@ -195,8 +194,14 @@ const SelectImage = () => {
       navigate('/Test');
     }
   }
+
+  // navigate parameter 확인코드
+  // 이전 페이지에서 선택한 카테고리 확인용 로직
+
   let location = useLocation();
-  // menu page 사용자 선택 확인용
+  const target_name = location.state.target_name;
+  // console.log(target_name);
+  
   
   const [move, setMove] = useState(false);
 
@@ -241,7 +246,6 @@ const SelectImage = () => {
   }
   // 이미지 단계적 이동
   function step(e){
-      // console.log(parseInt(obj_wine.target.style.left) - (target_x), (parseInt(obj_wine.target.style.top)) - (target_y))
       let nowleft = Math.abs(parseInt(obj_wine.target.style.left.replace('px','')));
       let nowtop = Math.abs(parseInt(obj_wine.target.style.top.replace('px','')));
           // 변경로직, 드래그 중단시 원래위치로 즉시이동
@@ -258,8 +262,6 @@ const SelectImage = () => {
   }
 
   function catchDrag(e){
-    console.log('drag start');
-    console.log(e);
     // var t = e.dataTransfer.setData("text", e.target.id);
     orgLeft = e.target.style.left;
     orgTop = e.target.style.top;
@@ -279,17 +281,13 @@ const SelectImage = () => {
       img_from_left = getLocFromLeft(e) - event_obj.clientX;
       img_from_top = getLocFromTop(e) - event_obj.clientY;
 
-      console.log(img_from_left);
-      console.log(img_from_top);
-
-      console.log(e.target.style.left);
+      
       // e.target.style.left = parseInt(e.clientX + (img_from_left) )+ "px";
       // e.target.style.top = parseInt(e.clientY + (img_from_top)) + "px";
     }
 
 
     function onDragOver(e) {
-      // console.log(e.target.id);
       e.preventDefault();
     }
 
@@ -297,33 +295,51 @@ const SelectImage = () => {
     let secondSelect;
     let thirdSelect;
 
-    const result = [];
+    
 
 
+    
     const [firstImage, setFirstImage] = useState(false);
     const [seconImage, setSeconImage] = useState(false);
     const [thirdImage, setThirdImage] = useState(false);
 
+    const [temp_second, setTemp_Second] = useState(false);
+
+
+    // useEffect 참고용 주석
+    // doc ready function 대용
+    // 1. useEffect(() => {
+    //  excute logic
+    // }, [])
+    // 2. component 변화 감지하여 사용
+    // useEffect(() => {
+    //  excute logic
+    // }, [dependency component name])
+
+
+
     function onDropImage(e) {
       e.preventDefault();
       let paperName = e.target.id;
+
       if(paperName == 'firstpaper') {
+        setTemp_Second(true);
         setFirstImage(true);
-        console.log(firstImage);
       }
       if(paperName == 'secondpaper') {
         setSeconImage(true);
-        console.log(seconImage);
+        setTemp_Second(false);
       }
       if(paperName == 'thirdpaper') {
         setThirdImage(true);
-        console.log(thirdImage);
+        // 마지막 이미지 뒤집어 준 다음 다음화면으로 이동.
+        // 다음화면 이동 parameter = result
+        
       }
     }
-
-
-    function allowDrop(e) {
-      e.preventDefault();
+    
+    function nextPage() {
+      navigate('/Result', { state : { 'first_select' : first, 'second_select' : second, 'third_select' : last } })
     }
 
     // 드래그가 시작되면서 실행되는 이벤트
@@ -333,15 +349,32 @@ const SelectImage = () => {
 
 
     // 드래그가 끝난 시점에 이미지 원위치
+    const [first, setFirst] = useState('');
+    const [second, setSecond] = useState('');
+    const [last, setLast] = useState('');
+
+    useEffect(() => {
+      if(second && last) {
+        nextPage();
+      }
+    },[last])
+
     function onDragEnd(e) {
-      console.log(e.target.id);
-      // console.log('drag end');
-      // console.log(e);
+      let value = e.target.id;
+      if(firstImage && !seconImage && !thirdImage) {
+        setFirst(value);
+      }
+      else if(firstImage && !thirdImage) {
+        setSecond(value);
+      }
+      else if(firstImage && thirdImage){
+        setLast(value);
+      }
+      console.log(value);
     }
 
     // 커서가 이미지에 올라왔을때 이미지 원위치를 저장해둠.
     function onMouseUp(e) {
-      // console.log(e.target.id);
       orgLeft = e.target.style.left;
       orgTop = e.target.style.top;
     }
@@ -382,6 +415,9 @@ const SelectImage = () => {
 
     //spreadOnClick
     const spreadButton = useRef(null);
+    const selectCardNo = useRef(null);
+
+    const divable = useRef(null);
 
     function spreadOnClick(e) {
       
@@ -435,7 +471,6 @@ const SelectImage = () => {
         spreadButton.current.childNodes[8].style.left = '2100px';
         spreadButton.current.childNodes[8].style.top = '946px';
       }, 1350)
-      
     }
 
 
@@ -483,7 +518,8 @@ const SelectImage = () => {
       <Grid item xs={12}>
         <Grid container justifyContent="center" spacing={spacing}>
               <Grid>
-                <h1 style={ { textAlign : 'center' }}>First Card</h1>
+              <h1 style={ { textAlign : 'center' }}>First Card</h1>
+              <div style = { firstImage ? { pointerEvents : 'none' } : {} } ref = { divable }>
               <Paper
                 sx={{
                   height: '60vh',
@@ -495,12 +531,15 @@ const SelectImage = () => {
                 }}
                 style={ firstImage ? styles.select_left : styles.emptyContainer }
                 id = 'firstpaper'
+                value = { first }
                 onDrop = { onDropImage } onDragOver = { onDragOver }
               />
+              </div>
             </Grid>
             <div style={ { width : '1vh' }}></div>
             <Grid>
             <h1 style={ { textAlign : 'center' }}>Second Card</h1>
+            <div style = { temp_second ? {  } : { pointerEvents : 'none' } } ref = { divable }>
               <Paper
                 sx={{
                   height: '60vh',
@@ -512,12 +551,15 @@ const SelectImage = () => {
                 }}
                 style={ seconImage ? styles.select_center : styles.emptyContainer }
                 id = 'secondpaper'
+                value = { second } 
                 onDrop = { onDropImage } onDragOver = { onDragOver }
               />
+            </div>
             </Grid>
             <div style={ { width : '1vh' }}></div>
             <Grid>
             <h1 style={ { textAlign : 'center' }}>Third Card</h1>
+            <div style = { firstImage && seconImage ? { } : { pointerEvents : 'none' } }ref = { divable }>
               <Paper
                 sx={{
                   height: '60vh',
@@ -529,8 +571,10 @@ const SelectImage = () => {
                 }}
                 style={ thirdImage ? styles.select_right : styles.emptyContainer }
                 id = 'thirdpaper'
+                value = { last }
                 onDrop = { onDropImage } onDragOver = { onDragOver }
               />
+              </div>
             </Grid>
         </Grid>
       </Grid>
@@ -557,15 +601,15 @@ const SelectImage = () => {
         </Grid>
         </Box> */} 
           <div ref = { spreadButton }>
-            <div className = 'card' ><img src = {back_card} id = { random_fix[0].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
-            <div className = 'card' ><img src = {back_card} id = { random_fix[1].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
-            <div className = 'card' ><img src = {back_card} id = { random_fix[2].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
-            <div className = 'card' ><img src = {back_card} id = { random_fix[3].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
-            <div className = 'card' ><img src = {back_card} id = { random_fix[4].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
-            <div className = 'card' ><img src = {back_card} id = { random_fix[5].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
-            <div className = 'card' ><img src = {back_card} id = { random_fix[6].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
-            <div className = 'card' ><img src = {back_card} id = { random_fix[7].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
-            <div className = 'card' ><img src = {back_card} id = { random_fix[8].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp }/></div>
+            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[0].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
+            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[1].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
+            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[2].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
+            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[3].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
+            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[4].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
+            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[5].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
+            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[6].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
+            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[7].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
+            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[8].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
         </div>
           <div>
           <Button variant = 'outlined' onClick = { spreadOnClick } >Spread</Button>

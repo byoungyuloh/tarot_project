@@ -42,7 +42,7 @@ function App() {
     <Route path='/SelectMenu' element={<SelectMenu />} />
     <Route path='/SelectImage' element={<SelectImage />} />
     <Route path='/test' element={<Test />} />
-    <Route path='/result' element={<Result />} />
+    <Route path='/Result' element={<Result />} />
     </Routes>
     </BrowserRouter>
   );
