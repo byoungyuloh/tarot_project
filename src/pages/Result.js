@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,20 +13,22 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
-import love_image from '../image/6_5.png';
-import money_image from '../image/21_4(hidden).png';
-import health_image from '../image/21_2.png';
-import { Navigate } from 'react-router-dom';
 import back_card from '../image/back_card.png';
 
 const Result = () => {
 
     let location = useLocation();
-    console.log(location.state)
-    // const target_name = location.state.target_name;
+    // console.log(location.state);
+
+    const card_turnover = useRef(null);
 
     const OnClickImage = (e) => {
-        console.log(e.target.name);
+        let target_name = e.target.name;
+        
+        if(target_name == 'turnover') {
+            let id = document.getElementById(e.target.id);
+            id.style.transform = id.style.transform === '' ? 'rotate(180deg)' : null;
+        }
     }
     
     const tiers = [
@@ -35,23 +37,28 @@ const Result = () => {
           buttonText: 'Go to LoveTarrot',
           buttonVariant: 'outlined',
           card_image : back_card,
-          category : 'love'
+          category : 'love',
+          id : location.state.first_select
         },
         {
           title: 'Your Second Card',
           buttonText: 'Go to MoneyTarrot',
           buttonVariant: 'outlined',
           card_image : back_card,
-          category : 'money'
+          category : 'money',
+          id : location.state.second_select
         },
         {
           title: 'Your Third Card',
           buttonText: 'Go to HealthTarrot',
           buttonVariant: 'outlined',
           card_image : back_card,
-          category : 'health'
+          category : 'health',
+          id : location.state.third_select
         },
       ];
+
+    //   console.log(tiers);
 
     function Copyright(props) {
         return (
@@ -105,12 +112,10 @@ const Result = () => {
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="flex-end">
           {tiers.map((tier) => (
-            // Enterprise card is full width at sm breakpoint
             <Grid
               item
               key={tier.title}
               xs={12}
-            //   sm={tier.title === 'Enterprise' ? 12 : 6}
               md={4}
             >
               <Card>
@@ -136,13 +141,15 @@ const Result = () => {
                       alignItems: 'baseline'
                     }}
                     onClick = { OnClickImage }
+                    
                   >
-                    <img src={ tier.card_image } alt='logo' style={ { height : '55vh' } } name = { tier.category } /> 
+                    <div ref= { card_turnover }>
+                    <img src={ tier.card_image } alt='logo' style={ { height : '50vh' } } name = { tier.category } id = { tier.id } /></div>
                   </Box>                
-                  <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage } name = 'confirm'>
+                  <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage } name = 'confirm' >
                     Confirm Like This
                   </Button>
-                  <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage } name = 'turnover'>
+                  <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage } name = 'turnover' id = { tier.id }>
                     Turn Over And Check
                   </Button>
               </Card>
