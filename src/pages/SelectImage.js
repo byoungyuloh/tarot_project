@@ -291,13 +291,6 @@ const SelectImage = () => {
       e.preventDefault();
     }
 
-    let firstSelect;
-    let secondSelect;
-    let thirdSelect;
-
-    
-
-
     
     const [firstImage, setFirstImage] = useState(false);
     const [seconImage, setSeconImage] = useState(false);
@@ -359,6 +352,11 @@ const SelectImage = () => {
       }
     },[last])
 
+
+    useEffect(() => {
+      setSpread(false);
+    },[first])
+
     function onDragEnd(e) {
       let value = e.target.id;
       if(firstImage && !seconImage && !thirdImage) {
@@ -371,6 +369,7 @@ const SelectImage = () => {
         setLast(value);
       }
       console.log(value);
+      // firstdiv
     }
 
     // 커서가 이미지에 올라왔을때 이미지 원위치를 저장해둠.
@@ -419,26 +418,26 @@ const SelectImage = () => {
 
     const divable = useRef(null);
 
+
+    const [spread, setSpread] = useState(false);
+
+
     function spreadOnClick(e) {
-      
-      
+
+      setSpread(true);
+
       setTimeout(function () {
         spreadButton.current.childNodes[0].style.left = '1300px';
         spreadButton.current.childNodes[0].style.top = '246px';
       }, 150)
-      
       setTimeout(function () {
         spreadButton.current.childNodes[1].style.left = '1700px'
         spreadButton.current.childNodes[1].style.top = '246px';
       }, 300)
-
       setTimeout(function () {
         spreadButton.current.childNodes[2].style.left = '2100px';
         spreadButton.current.childNodes[2].style.top = '246px';
-      }, 450)
-
-
-      
+      }, 450)      
       setTimeout(function () {
         spreadButton.current.childNodes[3].style.left = '1300px';
         spreadButton.current.childNodes[3].style.top = '596px';
@@ -448,25 +447,18 @@ const SelectImage = () => {
         spreadButton.current.childNodes[4].style.left = '1700px'
         spreadButton.current.childNodes[4].style.top = '596px';
       }, 750)
-
       setTimeout(function () {
         spreadButton.current.childNodes[5].style.left = '2100px';
         spreadButton.current.childNodes[5].style.top = '596px';
       }, 900)
-
-
-
-
       setTimeout(function () {
         spreadButton.current.childNodes[6].style.left = '1300px';
         spreadButton.current.childNodes[6].style.top = '946px';
       }, 1050)
-      
       setTimeout(function () {
         spreadButton.current.childNodes[7].style.left = '1700px'
         spreadButton.current.childNodes[7].style.top = '946px';
       }, 1200)
-
       setTimeout(function () {
         spreadButton.current.childNodes[8].style.left = '2100px';
         spreadButton.current.childNodes[8].style.top = '946px';
@@ -519,7 +511,8 @@ const SelectImage = () => {
         <Grid container justifyContent="center" spacing={spacing}>
               <Grid>
               <h1 style={ { textAlign : 'center' }}>First Card</h1>
-              <div style = { firstImage ? { pointerEvents : 'none' } : {} } ref = { divable }>
+              {/* <div style = { firstImage ? { pointerEvents : 'none' } : {} } ref = { divable }> */}
+              <div style = { spread? { } : { pointerEvents : 'none' } } id = 'firstdiv' >
               <Paper
                 sx={{
                   height: '60vh',
