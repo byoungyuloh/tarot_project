@@ -88,13 +88,21 @@
   margin-right: 0;
 }
 
+.card_stackOnClick {
+  left : 1100px;
+  top : 296px;
+}
 
 
-
+.card_default {
+  width : 200px; 
+  height : 300px;
+  position : 'absolute' 
+}
 
 .card_layout0 {
-  left : 1300px;
-  top : 246px;
+  left : 1100px;
+  top : 296px;
 }
 
 .card_layout1 {

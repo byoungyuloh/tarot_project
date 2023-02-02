@@ -13,7 +13,7 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
-import back_card from '../image/back_card.png';
+import back_card from '../image/back_image/back_image_3.png';
 
 const Result = () => {
 

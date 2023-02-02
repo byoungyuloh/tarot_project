@@ -8,14 +8,14 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
-import { useLocation, useNavigate } from 'react-router-dom'; 
+import { useLocation, useNavigate, useParams } from 'react-router-dom'; 
 import Paper from '@mui/material/Paper';
 import { experimentalStyled as styled } from '@mui/material/styles';
-import back_card from '../image/back_card.png';
-import black_image from '../image/black.jpg';
-import select_left from '../image/default_left.png';
-import select_center from '../image/default_center.png';
-import select_right from '../image/default_right.png';
+import back_card from '../image/back_image/back_image_3.png';
+import black_image from '../image/main_image/black.jpg';
+import select_left from '../image/main_image/default_left.png';
+import select_center from '../image/main_image/default_center.png';
+import select_right from '../image/main_image/default_right.png';
 
 
 
@@ -35,116 +35,135 @@ const random_list = [
   {
     id : random_num[0],
     left : 993,
-    top : 246
+    top : 246,
+    reverse : random_num[0] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[1],
     left : 1243,
-    top : 246
+    top : 246,
+    reverse : random_num[1] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[2],
     left : 1493,
-    top : 246
+    top : 246,
+    reverse : random_num[2] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[3],
     left : 1743,
-    top : 246
+    top : 246,
+    reverse : random_num[3] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[4],
     left : 1993,
-    top : 246
+    top : 246,
+    reverse : random_num[4] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[5],
     left : 2243,
-    top : 246
+    top : 246,
+    reverse : random_num[5] % 2 === 0 ? 'true' : 'false'
   },
   // 2열
   {
     id : random_num[6],
     left : 993,
-    top : 496
+    top : 496,
+    reverse : random_num[6] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[7],
     left : 1243,
-    top : 496
+    top : 496,
+    reverse : random_num[7] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[8],
     left : 1493,
-    top : 496
+    top : 496,
+    reverse : random_num[8] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[9],
     left : 1743,
-    top : 496
+    top : 496,
+    reverse : random_num[9] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[10],
     left : 1993,
-    top : 496
+    top : 496,
+    reverse : random_num[10] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[11],
     left : 2243,
-    top : 496
+    top : 496,
+    reverse : random_num[11] % 2 === 0 ? 'true' : 'false'
   },
   // 3열
   {
     id : random_num[12],
     left : 993,
-    top : 746
+    top : 746,
+    reverse : random_num[12] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[13],
     left : 1243,
-    top : 746
+    top : 746,
+    reverse : random_num[13] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[14],
     left : 1493,
-    top : 746
+    top : 746,
+    reverse : random_num[14] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[15],
     left : 1743,
-    top : 746
+    top : 746,
+    reverse : random_num[15] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[16],
     left : 1993,
-    top : 746
+    top : 746,
+    reverse : random_num[16] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[17],
     left : 2243,
-    top : 746
+    top : 746,
+    reverse : random_num[17] % 2 === 0 ? 'true' : 'false'
   },
   // 4열
   {
     id : random_num[18],
     left : 993,
-    top : 996
+    top : 996,
+    reverse : random_num[18] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[19],
     left : 1243,
-    top : 996
+    top : 996,
+    reverse : random_num[19] % 2 === 0 ? 'true' : 'false'
   },
   {
     id : random_num[20],
     left : 1493,
-    top : 996
+    top : 996,
+    reverse : random_num[20] % 2 === 0 ? 'true' : 'false'
   }
 ]
 
 const random_fix = random_list.slice(0,9);
-
-// console.log(random_fix);
 
 const styles = {
   select_left : {
@@ -200,92 +219,7 @@ const SelectImage = () => {
 
   let location = useLocation();
   const target_name = location.state.target_name;
-  // console.log(target_name);
   
-  
-  const [move, setMove] = useState(false);
-
-  let img_from_left = 0;
-  let img_from_top = 0;
-  let target_x = 0;
-  let target_y = 0;
-  let targetObj;
-  let animation_id;
-  let requestedId;
-  let orgLeft = 0;
-  let orgTop = 0;
-  const speed = 0.03;
-
-  let obj_wine = document.getElementById('1');
-  
-  // 위치 체크
-  function getLocFromLeft(e){
-    return parseInt(e.target.style.left.replace('px',''));
-  }
-  function getLocFromTop(e){
-    return parseInt(e.target.style.top.replace('px',''));
-  }
-
-
-  // 이미지 이동 함수
-  function moveOnDrag(e){
-      var event_obj = window.event? window.event : e;
-      targetObj.target.style.left = parseInt(event_obj.clientX + (img_from_left) )+ "px";
-      targetObj.target.style.top = parseInt(event_obj.clientY + (img_from_top)) + "px";
-      // setMove(true);
-      return false;
-  }
-  // 드래그 멈추기
-  function stopDrag(e){               
-      document.onmousemove = null;
-      document.onmouseup = null;               
-      // 놓았을 때 원래대로(목표지점) 돌아가기
-      // 조건으로 이미지 겹치는 범위에 따라 목적지 및 선택된 항목 분기 등 가능
-      requestedId = window.requestAnimationFrame(step);
-      // setMove(false);
-  }
-  // 이미지 단계적 이동
-  function step(e){
-      let nowleft = Math.abs(parseInt(obj_wine.target.style.left.replace('px','')));
-      let nowtop = Math.abs(parseInt(obj_wine.target.style.top.replace('px','')));
-          // 변경로직, 드래그 중단시 원래위치로 즉시이동
-          if
-          // 현재위치와 이미지 원래 위치 비교조건
-              (orgLeft > obj_wine.target.style.left || orgTop > obj_wine.target.style.top)
-            {
-                // obj_wine.target.style.left = parseInt(obj_wine.target.style.left) + (target_x-parseInt(obj_wine.target.style.left)*speed) + "px";
-                // obj_wine.target.style.top = parseInt(obj_wine.target.style.top) + (target_y-parseInt(obj_wine.target.style.top)*speed) + "px";
-                obj_wine.target.style.left = orgLeft;
-                obj_wine.target.style.top = orgTop;
-                requestedId = window.requestAnimationFrame(step);            
-            }; 
-  }
-
-  function catchDrag(e){
-    // var t = e.dataTransfer.setData("text", e.target.id);
-    orgLeft = e.target.style.left;
-    orgTop = e.target.style.top;
-    targetObj = e;
-    obj_wine = e;
-    let obj = e.target;
-    var event_obj = window.event? window.event: e;
-    img_from_left = getLocFromLeft(obj) - event_obj.clientX;
-    img_from_top = getLocFromTop(obj) - event_obj.clientY;
-    document.onmousemove = moveOnDrag;
-    document.onmouseup = stopDrag;
-    if(event_obj.preventDefault)event_obj.preventDefault();
-  }
-
-    function onMouseMove(e) {
-      var event_obj = window.event? window.event: e;
-      img_from_left = getLocFromLeft(e) - event_obj.clientX;
-      img_from_top = getLocFromTop(e) - event_obj.clientY;
-
-      
-      // e.target.style.left = parseInt(e.clientX + (img_from_left) )+ "px";
-      // e.target.style.top = parseInt(e.clientY + (img_from_top)) + "px";
-    }
-
 
     function onDragOver(e) {
       e.preventDefault();
@@ -332,14 +266,22 @@ const SelectImage = () => {
     }
     
     function nextPage() {
-      navigate('/Result', { state : { 'first_select' : first, 'second_select' : second, 'third_select' : last } })
+
+      let first_test = document.getElementById(first);
+      console.log(first_test);
+
+      navigate('/Result', 
+      { state :{  'first_select' : first,
+                  'first_reverse' : document.getElementById(first).name,
+                  'second_select' : second,
+                  'second_reverse' : document.getElementById(second).name,
+                  'third_select' : last,
+                  'third_reverse' : document.getElementById(last).name,
+                  'target_name' : target_name
+      }})
     }
 
-    // 드래그가 시작되면서 실행되는 이벤트
-    function onDragStart(e) {
-      
-    }
-
+    
 
     // 드래그가 끝난 시점에 이미지 원위치
     const [first, setFirst] = useState('');
@@ -368,54 +310,37 @@ const SelectImage = () => {
       else if(firstImage && thirdImage){
         setLast(value);
       }
-      console.log(value);
-      // firstdiv
-    }
-
-    // 커서가 이미지에 올라왔을때 이미지 원위치를 저장해둠.
-    function onMouseUp(e) {
-      orgLeft = e.target.style.left;
-      orgTop = e.target.style.top;
+      // console.log(value);
+      let hidden_target = document.getElementById(value);
+      hidden_target.style.display = 'none';
     }
 
 
     // stackOnClick
     function stackOnClick(e) {
-      
       spreadButton.current.childNodes[0].style.left = '1100px';
       spreadButton.current.childNodes[0].style.top = '296px';
-
       spreadButton.current.childNodes[1].style.left = '1100px';
       spreadButton.current.childNodes[1].style.top = '296px';
-
       spreadButton.current.childNodes[2].style.left = '1100px';
       spreadButton.current.childNodes[2].style.top = '296px';
-
       spreadButton.current.childNodes[3].style.left = '1100px';
       spreadButton.current.childNodes[3].style.top = '296px';
-
       spreadButton.current.childNodes[4].style.left = '1100px';
       spreadButton.current.childNodes[4].style.top = '296px';
-
       spreadButton.current.childNodes[5].style.left = '1100px';
       spreadButton.current.childNodes[5].style.top = '296px';
-
       spreadButton.current.childNodes[6].style.left = '1100px';
       spreadButton.current.childNodes[6].style.top = '296px';
-
       spreadButton.current.childNodes[7].style.left = '1100px';
       spreadButton.current.childNodes[7].style.top = '296px';
-
       spreadButton.current.childNodes[8].style.left = '1100px';
       spreadButton.current.childNodes[8].style.top = '296px';
-
     }
     
 
     //spreadOnClick
     const spreadButton = useRef(null);
-    const selectCardNo = useRef(null);
-
     const divable = useRef(null);
 
 
@@ -465,7 +390,7 @@ const SelectImage = () => {
       }, 1350)
     }
 
-
+    
     return (
       <React.Fragment>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
@@ -574,35 +499,16 @@ const SelectImage = () => {
       </Grid>
       </div>
       <div style={ { width : '60%', float : 'right' }}>
-        {/* <Box sx={{ flexGrow: 1 }}>
-        <Grid container spacing={1}>
-          <Grid container item spacing={2} >
-          <React.Fragment>
-            {random_list.map((random) => (
-                  <div key = { random.id } draggable = 'true'>
-                  <img  src = { back_card } key = { random.id }
-                        style={ { height : '250px', position : 'absolute', left : random.left, top : random.top, cursor : 'pointer'  } } alt='logo'
-                        id = { random.id } 
-                        onDrag = { onDragStart }
-                        onDragEnd = { onDragEnd }
-                        onMouseMove = { onMouseUp }
-                  />
-                  </div>
-              ))}
-          </React.Fragment>
-          </Grid>         
-        </Grid>
-        </Box> */} 
           <div ref = { spreadButton }>
-            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[0].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
-            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[1].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
-            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[2].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
-            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[3].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
-            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[4].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
-            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[5].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
-            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[6].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
-            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[7].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
-            <div className = 'card' ><img src = {back_card} ref = { selectCardNo } alt = 'cardimage' id = { random_fix[8].id } style = { { height : '302px', position : 'absolute' } } onDrag = { onDragStart } onDragEnd = { onDragEnd } onMouseMove = { onMouseUp } ref = { selectCardNo } /></div>
+            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[0].id } name = { random_fix[0].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[1].id } name = { random_fix[1].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[2].id } name = { random_fix[2].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[3].id } name = { random_fix[3].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[4].id } name = { random_fix[4].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[5].id } name = { random_fix[5].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[6].id } name = { random_fix[6].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[7].id } name = { random_fix[7].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[8].id } name = { random_fix[8].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
         </div>
           <div>
           <Button variant = 'outlined' onClick = { spreadOnClick } >Spread</Button>

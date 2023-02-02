@@ -12,9 +12,9 @@ import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
-import love_image from '../image/6_5.png';
-import money_image from '../image/21_4(hidden).png';
-import health_image from '../image/21_2.png';
+import love_image from '../image/main_image/6_5.png';
+import money_image from '../image/main_image/21_4(hidden).png';
+import health_image from '../image/main_image/21_2.png';
 import { unstable_HistoryRouter, useNavigate } from 'react-router-dom'; 
 import { Navigate } from 'react-router-dom';
 
