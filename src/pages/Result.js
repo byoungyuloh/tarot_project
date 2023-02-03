@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom'; 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -15,51 +15,76 @@ import GlobalStyles from '@mui/material/GlobalStyles';
 import Container from '@mui/material/Container';
 import back_card from '../image/back_image/back_image_3.png';
 
+
 const Result = () => {
-
     let location = useLocation();
-    // console.log(location.state);
-
-    const card_turnover = useRef(null);
-
     const OnClickImage = (e) => {
         let target_name = e.target.name;
+        let id = document.getElementById(e.target.id);
         
-        if(target_name == 'turnover') {
-            let id = document.getElementById(e.target.id);
-            id.style.transform = id.style.transform === '' ? 'rotate(180deg)' : null;
+
+        if(id.name == 'first_card') {
+          // image change, dynamic image import
+          id.src = require(`../image/main_image/${location.state.first_select}.png`);
+          // reverse 적용, button 회전 적용
+          target_name === 'confirm' ?
+          id.style.transform = location.state.first_reverse === 'true'? 'rotate(180deg)' : null
+          :
+          id.style.transform = location.state.first_reverse === 'true'? null : 'rotate(180deg)';
+          ;
         }
+
+        else if(id.name == 'second_card') {
+          // image change, dynamic image import
+          id.src = require(`../image/main_image/${location.state.second_select}.png`);
+          // reverse 적용, button 회전 적용
+          target_name === 'confirm' ?
+          id.style.transform = location.state.second_reverse === 'true'? 'rotate(180deg)' : null
+          :
+          id.style.transform = location.state.second_reverse === 'true'? null : 'rotate(180deg)';
+        }
+
+        if(id.name == 'third_card') {
+          // image change, dynamic image import
+          id.src = require(`../image/main_image/${location.state.third_select}.png`);
+          // reverse 적용, button 회전 적용
+          target_name === 'confirm' ?
+          id.style.transform = location.state.third_reverse === 'true'? 'rotate(180deg)' : null
+          :
+          id.style.transform = location.state.third_reverse === 'true'? null : 'rotate(180deg)';
+        }
+
     }
     
     const tiers = [
         {
           title: 'Your First Card',
-          buttonText: 'Go to LoveTarrot',
+          buttontext: 'first_button',
           buttonVariant: 'outlined',
           card_image : back_card,
-          category : 'love',
-          id : location.state.first_select
+          card_num : 'first_card',
+          id : location.state.first_select,
+          buttonnum : 1
         },
         {
           title: 'Your Second Card',
-          buttonText: 'Go to MoneyTarrot',
+          buttontext: 'second_button',
           buttonVariant: 'outlined',
           card_image : back_card,
-          category : 'money',
-          id : location.state.second_select
+          card_num : 'second_card',
+          id : location.state.second_select,
+          buttonnum : 2
         },
         {
           title: 'Your Third Card',
-          buttonText: 'Go to HealthTarrot',
+          buttontext: 'third_button',
           buttonVariant: 'outlined',
           card_image : back_card,
-          category : 'health',
-          id : location.state.third_select
+          card_num : 'third_card',
+          id : location.state.third_select,
+          buttonnum : 3
         },
       ];
-
-    //   console.log(tiers);
-
     function Copyright(props) {
         return (
           <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -72,8 +97,6 @@ const Result = () => {
           </Typography>
         );
       }
-
-
     return (
         <React.Fragment>
       <GlobalStyles styles={{ ul: { margin: 0, padding: 0, listStyle: 'none' } }} />
@@ -88,7 +111,7 @@ const Result = () => {
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             Amm.Tarrot
           </Typography>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick = { OnClickImage } name = 'main'>
+          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} name = 'main' >
             Main
           </Button>
         </Toolbar>
@@ -140,16 +163,15 @@ const Result = () => {
                       justifyContent: 'center',
                       alignItems: 'baseline'
                     }}
-                    onClick = { OnClickImage }
-                    
                   >
-                    <div ref= { card_turnover }>
-                    <img src={ tier.card_image } alt='logo' style={ { height : '50vh' } } name = { tier.category } id = { tier.id } /></div>
+                    <div>
+                    {/* <img src={ firstOpen ? require(`../image/main_image/${first_image}.png`) : tier.card_image } alt='logo' style={ { height : '50vh' } } name = { tier.card_num } id = { tier.id } /></div> */}
+                    <img src={ tier.card_image } alt='logo' style={ { height : '50vh' } } name = { tier.card_num } id = { tier.id } /></div>
                   </Box>                
-                  <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage } name = 'confirm' >
+                  <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage } name = 'confirm' id = { tier.id } text = { tier.buttontext }>
                     Confirm Like This
                   </Button>
-                  <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage } name = 'turnover' id = { tier.id }>
+                  <Button fullWidth variant={tier.buttonVariant} onClick = { OnClickImage } name = 'turnover' id = { tier.id } text = { tier.buttontext }>
                     Turn Over And Check
                   </Button>
               </Card>

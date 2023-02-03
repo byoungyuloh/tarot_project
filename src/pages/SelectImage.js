@@ -224,26 +224,12 @@ const SelectImage = () => {
     function onDragOver(e) {
       e.preventDefault();
     }
-
     
     const [firstImage, setFirstImage] = useState(false);
     const [seconImage, setSeconImage] = useState(false);
     const [thirdImage, setThirdImage] = useState(false);
 
     const [temp_second, setTemp_Second] = useState(false);
-
-
-    // useEffect 참고용 주석
-    // doc ready function 대용
-    // 1. useEffect(() => {
-    //  excute logic
-    // }, [])
-    // 2. component 변화 감지하여 사용
-    // useEffect(() => {
-    //  excute logic
-    // }, [dependency component name])
-
-
 
     function onDropImage(e) {
       e.preventDefault();
@@ -268,15 +254,14 @@ const SelectImage = () => {
     function nextPage() {
 
       let first_test = document.getElementById(first);
-      console.log(first_test);
-
+      
       navigate('/Result', 
       { state :{  'first_select' : first,
                   'first_reverse' : document.getElementById(first).name,
                   'second_select' : second,
                   'second_reverse' : document.getElementById(second).name,
-                  'third_select' : last,
-                  'third_reverse' : document.getElementById(last).name,
+                  'third_select' : third,
+                  'third_reverse' : document.getElementById(third).name,
                   'target_name' : target_name
       }})
     }
@@ -286,13 +271,13 @@ const SelectImage = () => {
     // 드래그가 끝난 시점에 이미지 원위치
     const [first, setFirst] = useState('');
     const [second, setSecond] = useState('');
-    const [last, setLast] = useState('');
+    const [third, setThird] = useState('');
 
     useEffect(() => {
-      if(second && last) {
+      if(second && third) {
         nextPage();
       }
-    },[last])
+    },[third])
 
 
     useEffect(() => {
@@ -308,7 +293,7 @@ const SelectImage = () => {
         setSecond(value);
       }
       else if(firstImage && thirdImage){
-        setLast(value);
+        setThird(value);
       }
       // console.log(value);
       let hidden_target = document.getElementById(value);
@@ -489,7 +474,7 @@ const SelectImage = () => {
                 }}
                 style={ thirdImage ? styles.select_right : styles.emptyContainer }
                 id = 'thirdpaper'
-                value = { last }
+                value = { third }
                 onDrop = { onDropImage } onDragOver = { onDragOver }
               />
               </div>
@@ -500,15 +485,26 @@ const SelectImage = () => {
       </div>
       <div style={ { width : '60%', float : 'right' }}>
           <div ref = { spreadButton }>
-            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[0].id } name = { random_fix[0].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[1].id } name = { random_fix[1].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[2].id } name = { random_fix[2].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[3].id } name = { random_fix[3].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[4].id } name = { random_fix[4].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[5].id } name = { random_fix[5].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[6].id } name = { random_fix[6].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[7].id } name = { random_fix[7].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {back_card} alt = 'cardimage' id = { random_fix[8].id } name = { random_fix[8].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            {/* <div className = 'card' ><img src = {require(`../image/back_image/back_image${ random_fix[0] }.png`)} alt = 'cardimage' id = { random_fix[0].id } name = { random_fix[0].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[1] }.png`)} alt = 'cardimage' id = { random_fix[1].id } name = { random_fix[1].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[2] }.png`)} alt = 'cardimage' id = { random_fix[2].id } name = { random_fix[2].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[3] }.png`)} alt = 'cardimage' id = { random_fix[3].id } name = { random_fix[3].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[4] }.png`)} alt = 'cardimage' id = { random_fix[4].id } name = { random_fix[4].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[5] }.png`)} alt = 'cardimage' id = { random_fix[5].id } name = { random_fix[5].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[6] }.png`)} alt = 'cardimage' id = { random_fix[6].id } name = { random_fix[6].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[7] }.png`)} alt = 'cardimage' id = { random_fix[7].id } name = { random_fix[7].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[8] }.png`)} alt = 'cardimage' id = { random_fix[8].id } name = { random_fix[8].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div> */}
+
+
+            <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[0].id } name = { random_fix[0].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[1].id } name = { random_fix[1].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[2].id } name = { random_fix[2].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[3].id } name = { random_fix[3].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[4].id } name = { random_fix[4].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[5].id } name = { random_fix[5].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[6].id } name = { random_fix[6].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[7].id } name = { random_fix[7].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
+            <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[8].id } name = { random_fix[8].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
         </div>
           <div>
           <Button variant = 'outlined' onClick = { spreadOnClick } >Spread</Button>
