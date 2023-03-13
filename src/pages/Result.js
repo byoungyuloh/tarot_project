@@ -18,6 +18,12 @@ import back_card from '../image/back_image/back_image_3.png';
 
 const Result = () => {
     let location = useLocation();
+    let navigate = useNavigate();
+
+    const onClickMain = () => {
+      navigate('/Main');
+    }
+
     const OnClickImage = (e) => {
         let target_name = e.target.name;
         let id = document.getElementById(e.target.id);
@@ -111,7 +117,7 @@ const Result = () => {
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             Amm.Tarrot
           </Typography>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} name = 'main' >
+          <Button variant="outlined" sx={{ my: 1, mx: 1.5 }} name = 'main' onClick={ onClickMain }>
             Main
           </Button>
         </Toolbar>

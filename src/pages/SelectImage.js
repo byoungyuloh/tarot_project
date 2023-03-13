@@ -209,9 +209,6 @@ const SelectImage = () => {
     else if(target_name == 'menu') {
       navigate('/SelectMenu');
     }
-    else {
-      navigate('/Test');
-    }
   }
 
   // navigate parameter 확인코드
@@ -396,9 +393,6 @@ const SelectImage = () => {
           <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick = { onClick } name = 'menu'>
             Select Category
           </Button>
-          <Button href="#" variant="outlined" sx={{ my: 1, mx: 1.5 }} onClick = { onClick } name = 'test'>
-            image Move Test
-          </Button>
         </Toolbar>
       </AppBar>
       {/* Hero unit */}
@@ -485,17 +479,6 @@ const SelectImage = () => {
       </div>
       <div style={ { width : '60%', float : 'right' }}>
           <div ref = { spreadButton }>
-            {/* <div className = 'card' ><img src = {require(`../image/back_image/back_image${ random_fix[0] }.png`)} alt = 'cardimage' id = { random_fix[0].id } name = { random_fix[0].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[1] }.png`)} alt = 'cardimage' id = { random_fix[1].id } name = { random_fix[1].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[2] }.png`)} alt = 'cardimage' id = { random_fix[2].id } name = { random_fix[2].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[3] }.png`)} alt = 'cardimage' id = { random_fix[3].id } name = { random_fix[3].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[4] }.png`)} alt = 'cardimage' id = { random_fix[4].id } name = { random_fix[4].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[5] }.png`)} alt = 'cardimage' id = { random_fix[5].id } name = { random_fix[5].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[6] }.png`)} alt = 'cardimage' id = { random_fix[6].id } name = { random_fix[6].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[7] }.png`)} alt = 'cardimage' id = { random_fix[7].id } name = { random_fix[7].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
-            <div className = 'card' ><img src = {require(`../image/back_image/back_image_${ random_fix[8] }.png`)} alt = 'cardimage' id = { random_fix[8].id } name = { random_fix[8].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div> */}
-
-
             <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[0].id } name = { random_fix[0].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
             <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[1].id } name = { random_fix[1].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
             <div className = 'card' ><img src = { back_card } alt = 'cardimage' id = { random_fix[2].id } name = { random_fix[2].reverse } className = 'card_default' onDragEnd = { onDragEnd } /></div>
